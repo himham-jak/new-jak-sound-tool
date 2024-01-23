@@ -1,0 +1,14 @@
+{
+  "name": "new-jak-sound-tool",
+  "version": "1.0.0",
+  "description": "react/node PS2 audio tools",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Himham",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

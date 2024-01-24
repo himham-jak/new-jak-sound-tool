@@ -2,40 +2,95 @@ import React, { useEffect, useState } from 'react'
 import logo from './logo.svg'
 import './App.css'
 
-function App() {
-  
-  const [backendData, setBackendData] = useState([{}])
+{/*spoofing data*/}
+const files = [
+    "Filename.SBK","ATOLL.MUS"
+  ]
 
-  useEffect(() => {
-    fetch("/api").then(
-      response => response.json()
-    ).then(
-      data => {
-        setBackendData(data)
-      }
-    )
-  }, [])
-
+function NavHeader() {
   return (
-  <div>
-
-    {(typeof backendData.users === 'undefined') ? (
-      <p>Loading</p>
-      ): (
-        backendData.users.map((user, i) => (
-          <p key={i}>{user}'s</p>
-        ))
-      )}
-
-  </div>
+    <span class="nav-btns">
+      <i class="fa fa-list"></i>
+      Jak Audio Editor
+      <i class="fa fa-plus"></i>
+    </span>
   )
 }
 
-function AppDev() {
+function NavTab(props) {
+  return (
+    <span class="filename">
+      <h4>{props.name}</h4>
+    </span>
+  )
+}
 
-  const files = [
-    "Filename.SBK","ATOLL.MUS"
-    ]
+function WorkButton(props) {
+  return (
+    <div class="btn">
+      <span>
+        <i class={props.icon}></i>
+      </span>
+    </div>
+  )
+}
+
+function Progress() {
+  return (
+    <div class="progress">
+      <div class="progress-bar">
+        <div class="current">
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function TrackInfo(props) {
+  return (
+    <div class="name">
+      <h2>{props.name}</h2>
+      <span class="author">
+        Tempo: {props.tempo}bpm
+      </span>
+    </div>
+  )
+}
+
+function Controller() {
+  return (
+    <div class="controls">
+      <WorkButton icon="fa fa-volume-up" />
+      <WorkButton icon="fa fa-step-backward" />
+      <WorkButton icon="fa fa-pause" />
+      <WorkButton icon="fa fa-step-forward" />
+      <WorkButton icon="fa fa-stop" />
+      <WorkButton icon="fa fa-download" />
+      <WorkButton icon="fa fa-microphone" />
+    </div>
+  )
+}
+
+function Track(props) {
+  return (
+    <div class="row">
+
+      {/* info bar */}
+      <TrackInfo name={props.name} />
+
+      {/* progress bar */}
+      <Progress />
+
+      {/* control bar*/}
+      <Controller />
+
+    </div>
+  )
+}
+
+
+
+function App() {
 
   return (
   <div class="box">
@@ -43,98 +98,33 @@ function AppDev() {
       {/* file column */}
       <div class="file-column">
         {/* nav buttons */}
-        <span class="nav-btns">
-          <i class="fa fa-list"></i>
-          Jak Audio Editor
-          <i class="fa fa-plus"></i>
-        </span>
+        <NavHeader />
 
         {/* file list */}
         <div class="file-list">
-
-        {/* nav tab per file*/}
-        {files.map((name) => {
-          return(
-            <span class="filename">
-            <h4>{name}</h4>
-            </span>
-            )
-        })}
-
+          {/* nav tab per file*/}
+          {files.map((name) => {
+            return(
+              <NavTab name={name}/>
+              )
+          })}
         </div>
       </div>
+
       {/* right column */}
       <div class="work-column">
 
+        {/*for each track, create a work row*/}
         {files.map((name) => {
           return(
-            <div class="row">
-          <div class="name">
-            <h2>{name}</h2>
-            <span class="author">
-              Tempo: 123bpm
-            </span>
-          </div>
-          <div class="progress">
-            <div class="progress-bar">
-              <div class="current">
-              </div>
-            </div>
-          </div>
-          {/* controls */}
-          <div class="controls">
-
-            <div class="btn">
-              <span>
-                <i class="fa fa-volume-up"></i>
-              </span>
-            </div>
-
-            <div class="btn">
-              <span>
-                <i class="fa fa-step-backward"></i>
-              </span>
-            </div>
-
-            <div class="btn">
-              <span>
-                <i class="fa fa-pause"></i>
-              </span>
-            </div>
-
-            <div class="btn">
-              <span>
-                <i class="fa fa-step-forward"></i>
-              </span>
-            </div>
-
-            <div class="btn">
-              <span>
-                <i class="fa fa-stop"></i>
-              </span>
-            </div>
-
-            <div class="btn">
-              <span>
-                <i class="fa fa-download"></i>
-              </span>
-            </div>
-
-            <div class="btn">
-              <span>
-            <i class="fa fa-microphone"></i>
-              </span>
-            </div>
-
-          </div>
-        </div>
-            )
-        })}
+            <Track name={name}/>
+          )})}
 
       </div>
+
     </div>
   </div>
   )
 }
 
-export default AppDev
+export default App

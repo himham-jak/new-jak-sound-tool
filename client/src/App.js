@@ -4,7 +4,18 @@ import './App.css'
 
 {/*spoofing data*/}
 const files = [
-    "Filename.SBK","ATOLL.MUS"
+    {
+      name:"Filename.SBK",
+      tempo: "123"
+    },
+    {
+      name:"Filenames.SBK",
+      tempo: "123s"
+    },
+    {
+      name:"Filenamess.SBK",
+      tempo: "123ss"
+    }
   ]
 
 function NavHeader() {
@@ -46,12 +57,12 @@ function Progress() {
   )
 }
 
-function TrackInfo(props) {
+function TrackInfo(track) {
   return (
     <div class="name">
-      <h2>{props.name}</h2>
+      <h2>{track.name}</h2>
       <span class="author">
-        Tempo: {props.tempo}bpm
+        Tempo: {track.tempo}bpm
       </span>
     </div>
   )
@@ -76,7 +87,7 @@ function Track(props) {
     <div class="row">
 
       {/* info bar */}
-      <TrackInfo name={props.name} />
+      <TrackInfo name={props.name} tempo={props.tempo} />
 
       {/* progress bar */}
       <Progress />
@@ -103,9 +114,9 @@ function App() {
         {/* file list */}
         <div class="file-list">
           {/* nav tab per file*/}
-          {files.map((name) => {
+          {files.map((file) => {
             return(
-              <NavTab name={name}/>
+              <NavTab name={file.name}/>
               )
           })}
         </div>
@@ -115,9 +126,9 @@ function App() {
       <div class="work-column">
 
         {/*for each track, create a work row*/}
-        {files.map((name) => {
+        {files.map((file) => {
           return(
-            <Track name={name}/>
+            <Track name={file.name} tempo={file.tempo}/>
           )})}
 
       </div>

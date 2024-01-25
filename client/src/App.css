@@ -18,7 +18,7 @@
 }
 .box,
 .columns,
-.progress,
+.sliderDiv,
 .controls .btn span{
   display: flex;
   justify-content: center;
@@ -99,7 +99,7 @@
   padding: 0px 10px;
   margin-top: 4px;
 }
-.work-column .progress{
+.work-column .sliderDiv{
   width: 100%;
   height: 30px;
   background-color: #413f42;
@@ -109,7 +109,7 @@
   margin-top: 6px;
   margin-bottom: 6px;
 }
-.progress .progress-bar{
+.sliderDiv .sliderBar{
   width:100%;
   height:5px;
   background-color: #fff;
@@ -117,8 +117,8 @@
   border-radius: 50px;
   cursor:pointer;
 }
-.progress .progress-bar .current{
-  background-color: var(--color-1);
+.current{
+  background-color: var(--color-2);
   position:relative;
   top:0;
   left:0;
@@ -127,7 +127,7 @@
   box-shadow:1px 1px rgba(0, 0, 0, 0.5);
   border-radius:50px;
 }
-.progress .progress-bar .current::before{
+.sliderDiv .sliderBar .current::before{
   content:'';
   width:20px;
   height:20px;
@@ -162,4 +162,89 @@
   background-color: #fff;
   border-radius: 50%;
   border:1px solid #222;
+}
+#fileinput{
+  display:none;
+}
+/* Container for the slider */
+.work-column .sliderDiv {
+  width: 100%;
+  padding: 10px 15px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+/* Label for the slider */
+.work-column .sliderDiv .label{
+  width: 40px;
+  text-align: center;
+  padding-right: 4px;
+}
+
+/* Style for the range input (slider track) */
+.work-column .sliderDiv .slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 5px; 
+  background-color: #413f42;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Slider track before the thumb (in Chrome, Safari, Edge) */
+.work-column .sliderDiv .slider::-webkit-slider-runnable-track {
+  height: 5px;
+  background: linear-gradient(to right, var(--color-1) 0%, var(--color-1) var(--thumb-position, 50%), #fff var(--thumb-position, 50%), #fff 100%);
+  border-radius: 50px;
+  box-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+/* Slider thumb (in Chrome, Safari, Edge) */
+.work-column .sliderDiv .slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default appearance */
+  margin-top: -8px; /* Adjust to center vertically with the track */
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-1);
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Slider track before the thumb (in Firefox) */
+.work-column .sliderDiv .slider::-moz-range-track {
+  height: 5px;
+  background-color: #fff;
+  border-radius: 50px;
+  box-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+/* Slider thumb (in Firefox) */
+.work-column .sliderDiv .slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-1);
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Slider thumb (in IE) */
+.work-column .sliderDiv .slider::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-1);
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Slider track (in IE) */
+.work-column .sliderDiv .slider::-ms-track {
+  height: 5px;
+  background-color: #fff;
+  border-radius: 50px;
+  box-shadow: 1px 1px rgba(0, 0, 0, 0.5);
 }

@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { impulse_response_url } from './Constants'
+import { useDispatch } from 'react-redux'
+import { addFile } from './fileSlice.js'
 import { decode_sbv2 } from './AudioHandler'
 
 function toHexString(byteArray) {
@@ -11,20 +13,16 @@ function toHexString(byteArray) {
 
 export async function load_gamefile(infile) {
 
-  {/*spoofing data*/}
-  const testfile = {
-      name:"Track 1",
-      tempo: 150,
-      ticks: 480
-  }
-
   // filestring.extension
   let filename = infile.name
+
   // filestring, extension
   let [fileString, fileExt] = infile.name.split(".")
 
   // binary data
   let infile_array = new Uint8Array(await new Response(infile).arrayBuffer());
+
+  // read it out
   //console.log(toHexString(infile_array));
 
   //check some binary details
@@ -32,6 +30,19 @@ export async function load_gamefile(infile) {
 
   // return object with all metadata structured
   let sbv2 = decode_sbv2(infile_array)
+
+  // add the generic details
+  sbv2.name = filename
+  sbv2.string = fileString
+  sbv2.extension = fileExt
+  sbv2.selected = true
+
+  //const dispatch = useDispatch()
+
+  //dispatch(addFile(sbv2))
+  //console.log(sbv2)
+
+  // add the struct to the filelist after return
   return(sbv2)
 
   // set_sbv2 (MUS)

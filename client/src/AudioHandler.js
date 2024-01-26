@@ -308,6 +308,7 @@ export class SBv2Decoder {
     let instruments_start = dv.getUint32(sbv2_start + 0x20, true) + sbv2_start;
     let num_instruments = dv.getUint16(sbv2_start + 0x16, true);
     
+    this.num_instruments = num_instruments;
     this.instruments = [];
     this.min_note = 127;
     this.max_note = 0;
@@ -556,6 +557,7 @@ export class SBv2Decoder {
       track.ticks = ticks;
       track.seconds = seconds;
     }
+    this.num_tracks = this.tracks.length
   }
 }
 

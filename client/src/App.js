@@ -1,33 +1,34 @@
 import React, { useRef, useState } from 'react'
+import { Provider, useSelector, useDispatch } from 'react-redux'
+import { store } from './Store'
+import { addFile, removeFile, selectFile } from './fileSlice.js'
 import { load_gamefile } from './FileLoader'
 import { filelist } from './AudioHandler'
 import './App.css'
 
 
-const fileHandOff = (event) => {
-  // Access the selected files from the event object
-  const files = event.target.files
-  alert("Number of files selected: " + files.length)
-
-  // Call load_gamefile for each file selected
-  for (let i=0; i < files.length; i++) {
-    let filee = load_gamefile(files[i])
-    console.log("allduh ",filee)
-  }
-}
-
-
 function NavHeader() {
 
-  // Initialize the state with an empty array
-  const [fileList, setFileList] = useState([]);
+  // rev up the dispatcher to push new files to the filelist
+  const dispatch = useDispatch()
+
+  const fileHandOff = (event) => {
+    // Access the selected files from the event object
+    const files = event.target.files
+    //alert("Number of files selected: " + files.length)
+
+    // Call load_gamefile for each file selected
+    for (let i=0; i < files.length; i++) {
+      let file_loaded = load_gamefile(files[i]).then((file) => dispatch(addFile(file)))
+    }
+  }
 
   return (
     <span className="nav-btns">
       <i className="fa fa-list"></i>
       Jak Audio Editor
       <input type="file" id="fileinput" name="file" onChange={fileHandOff} multiple="multiple"/>
-      <label for="fileinput">
+      <label htmlFor="fileinput">
         <i className="fa fa-plus" onClick={()=>{}}></i>
       </label>
     </span>
@@ -180,40 +181,74 @@ function Track(props) {
   )
 }
 
-function App() {
 
+function FileCol(props) {
+  const filelist  = useSelector((state) => state.freduce.filelist)
+  const dispatch = useDispatch()
+  const testfile = {
+    name:"Track 1",
+    tempo: 150,
+    ticks: 480
+  }
   return (
-    <div className="box">
-      <div className="columns">
-        {/* file column */}
-        <div className="file-column">
-          {/* nav buttons */}
-          <NavHeader />
+    <div className="file-column">
+      {/* nav buttons */}
+      <NavHeader />
 
-          {/* file list */}
-          <div className="file-list">
-            {/* nav tab per file*/}
-            {filelist.map((file) => {
-              return(
-                <NavTab name={file.name}/>
-                )
-            })}
-          </div>
-        </div>
+      <button onClick={()=> dispatch(addFile(testfile))}>TEST</button>
+      <button onClick={()=> dispatch(removeFile(0))}>TEST</button>
+      <button onClick={()=> dispatch(selectFile(0))}>TEST</button>
 
-        {/* right column */}
-        <div className="work-column">
-
-          {/*for each track, create a work row*/}
-          {filelist.map((file) => {
-            return(
-              <Track name={file.name} tempo={file.tempo} ticks={file.ticks}/>
-            )})}
-
-        </div>
-
+      {/* file list */}
+      <div className="file-list">
+        {/* nav tab per file*/}
+        {filelist.map((file) => {
+          return(
+            <NavTab name={file.name}/>
+            )
+        })}
       </div>
     </div>
+  )
+}
+
+
+function WorkCol(props) {
+  const filelist  = useSelector((state) => state.freduce.filelist)
+  const dispatch = useDispatch()
+  return (
+    <div className="work-column">
+
+      {/*for each track, create a work row*/}
+      {filelist.filter(file => file.selected).map((file, fileIndex) => (
+        file.tracks.map((track, trackIndex) => (
+          <Track
+            key={`${fileIndex}_${trackIndex}`} // Unique key for each Track
+            name={`${file.tag} Track ${trackIndex + 1}`} // Assuming you want to start track numbering at 1
+            tempo={track.tempo} // Assuming each track has a tempo
+            ticks={track.ticks} // Assuming each track has ticks
+          />
+        ))
+      ))}
+    </div>
+  )
+}
+
+
+function App() {
+  return (
+    <Provider store={store}>
+      <div className="box">
+        <div className="columns">
+          {/* file column */}
+          <FileCol/>
+
+          {/* right column */}
+          <WorkCol/>
+
+        </div>
+      </div>
+    </Provider>
   )
 }
 

@@ -248,3 +248,11 @@
   border-radius: 50px;
   box-shadow: 1px 1px rgba(0, 0, 0, 0.5);
 }
+
+.channel-controller table{
+  width:100%;
+}
+
+.channel-controller table tr td{
+  text-align: center;
+}

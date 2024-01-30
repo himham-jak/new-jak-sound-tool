@@ -3,7 +3,7 @@ import { Provider, useSelector, useDispatch } from 'react-redux'
 import { store } from './Store'
 import { addFile, removeFile, selectFile } from './fileSlice.js'
 import { load_gamefile } from './FileLoader'
-import { filelist } from './AudioHandler'
+import { filelist, audio_context, playTrack } from './AudioHandler'
 import './App.css'
 
 
@@ -20,6 +20,7 @@ function NavHeader() {
     // Call load_gamefile for each file selected
     for (let i=0; i < files.length; i++) {
       let file_loaded = load_gamefile(files[i]).then((file) => dispatch(addFile(file)))
+      console.log("File Loaded: ", file_loaded)
     }
   }
 
@@ -49,7 +50,7 @@ function WorkButton(props) {
   return (
     <div className="btn">
       <span>
-        <i className={props.icon}></i>
+        <i className={props.icon} onClick={props.func}></i>
       </span>
     </div>
   )
@@ -89,12 +90,12 @@ function TrackInfo(track) {
 }
 
 
-function Controller() {
+function Controller(sbv2, trackIndex) {
   return (
     <div className="controls">
       <WorkButton icon="fa fa-volume-up" />
       <WorkButton icon="fa fa-step-backward" />
-      <WorkButton icon="fa fa-play" />
+      <WorkButton icon="fa fa-play" func={()=>{console.log("this",sbv2);console.log("this2",sbv2.tracks);}}/>
       <WorkButton icon="fa fa-step-forward" />
       <WorkButton icon="fa fa-stop" />
       <WorkButton icon="fa fa-download" />
@@ -175,7 +176,7 @@ function Track(props) {
       <Slider />
 
       {/* control bar*/}
-      <Controller />
+      <Controller sbv2={props.sbv2} trackIndex={props.trackIndex}/>
 
     </div>
   )
@@ -223,6 +224,8 @@ function WorkCol(props) {
       {filelist.filter(file => file.selected).map((file, fileIndex) => (
         file.tracks.map((track, trackIndex) => (
           <Track
+            sbv2={file}
+            trackIndex={trackIndex}
             key={`${fileIndex}_${trackIndex}`} // Unique key for each Track
             name={`${file.tag} Track ${trackIndex + 1}`} // Assuming you want to start track numbering at 1
             tempo={track.tempo} // Assuming each track has a tempo

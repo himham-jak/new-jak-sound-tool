@@ -1,6 +1,10 @@
 import { impulse_response_url, adsr_rates } from './Constants'
 import { useState } from 'react'
 
+let stop_playing = null;
+
+export let audio_context = new AudioContext({sampleRate: 48000}); // the PS2 SPU runs at 48 kHz
+
 
 {/*spoofing data*/}
 const testfile = {
@@ -9,14 +13,11 @@ const testfile = {
     ticks: 480
 }
 
-// currently open files
-export let filelist = [testfile,testfile]
-
 
 export class MidiPlayer {
   constructor(sbv2, track, ctx) {
     // audio setup
-    let audio_context = new AudioContext({sampleRate: 48000}); // the PS2 SPU runs at 48 kHz
+    //audio_context predefined at top level
     let convolver_buffer
     let convolver_node = audio_context.createConvolver();
     convolver_node.connect(audio_context.destination);
@@ -852,3 +853,40 @@ export function decode_sbv2(infile_array) {
   let sbv2 = new SBv2Decoder(infile_array)
   return(sbv2)
 }
+
+
+export function playTrack(sbv2, trackIndex, audio_context) {
+
+  if(stop_playing) { stop_playing(); stop_playing = null; }
+  
+  let player = new MidiPlayer(sbv2, sbv2.tracks[trackIndex], audio_context);
+  //player.channel_mask = calc_channel_mask();
+  //player.reverb_enabled = reverb_toggle.checked;
+  player.play();
+  console.log("Player: ", player);
+  
+  {/*let do_vis = () => {
+      if(player.curr_timeout == null) return;
+      for(let i = 0; i < 16; i++) {
+        let channel = player.channels[i];
+        let is_playing = false;
+        for(let note of channel) {
+          if(note) {
+            is_playing = true;
+            break;
+          }
+        }
+        let vis = channel_labels[i];
+        vis.style.backgroundColor = is_playing ? "#ccaacc" : "transparent";
+      }
+      player.channel_mask = calc_channel_mask();
+      player.reverb_enabled = reverb_toggle.checked;
+      setTimeout(do_vis, 50);
+    };
+    do_vis();*/}
+  
+  stop_playing = () => {
+    player.stop();
+    //for(let vis of channel_labels) {vis.style.backgroundColor = "transparent";}
+  };
+};

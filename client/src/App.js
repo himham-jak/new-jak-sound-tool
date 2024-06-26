@@ -3,6 +3,7 @@ import { Provider, useSelector, useDispatch } from 'react-redux'
 import { store } from './Store'
 import { addFile, removeFile, selectFile } from './fileSlice.js'
 import { load_gamefile } from './FileLoader'
+import { saveAs } from './FileSaver'
 import { filelist, audio_context, playTrack } from './AudioHandler'
 import './App.css'
 
@@ -92,14 +93,19 @@ function TrackInfo(track) {
 
 function Controller(sbv2, trackIndex) {
   return (
-    <div className="controls">
-      <WorkButton icon="fa fa-volume-up" />
-      <WorkButton icon="fa fa-step-backward" />
-      <WorkButton icon="fa fa-play" func={()=>{console.log("this",sbv2);console.log("this2",sbv2.tracks);}}/>
-      <WorkButton icon="fa fa-step-forward" />
-      <WorkButton icon="fa fa-stop" />
-      <WorkButton icon="fa fa-download" />
-      <WorkButton icon="fa fa-microphone" />
+    <div>
+      <div className="controls">
+        <WorkButton icon="fa fa-step-backward" func={()=>{console.log("step back");}}/>
+        <WorkButton icon="fa fa-play" func={()=>{console.log("this",sbv2);console.log("this2",sbv2.sbv2.tracks);}} />
+        <WorkButton icon="fa fa-step-forward" func={()=>{console.log("step forward");}}/>
+        <WorkButton icon="fa fa-stop" func={()=>{console.log("stop");}} />
+      </div>
+      <div className="controls">
+        <WorkButton icon="fa fa-volume-up" func={()=>{console.log("open volume slider");}}/>
+        <WorkButton icon="fa fa-download" func={()=>{console.log("download");var blob = new Blob(["Hello World"],{type:"text/plain;charset=utf-8"});saveAs(blob,"placeholder.garbage");}} />
+        <WorkButton icon="fa fa-upload" func={()=>{console.log("replace");}} />
+        <WorkButton icon="fa fa-microphone" func={()=>{console.log("record");}} />
+      </div>
     </div>
   )
 }

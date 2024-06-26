@@ -11,8 +11,8 @@
 // The one and only way of getting global scope in all environments
 // https://stackoverflow.com/q/3277182/1008999
 var _global = typeof window === 'object' && window.window === window
-  ? window : typeof self === 'object' && self.self === self
-  ? self : typeof global === 'object' && global.global === global
+  ? window : typeof window.self === 'object' && window.self.self === window.self
+  ? window.self : typeof global === 'object' && global.global === global
   ? global
   : this
 
@@ -93,7 +93,7 @@ var saveAs = _global.saveAs || (
     if (typeof blob === 'string') {
       // Support regular links
       a.href = blob
-      if (a.origin !== location.origin) {
+      if (a.origin !== window.location.origin) {
         corsEnabled(a.href)
           ? download(blob, name, opts)
           : click(a, a.target = '_blank')
@@ -131,7 +131,7 @@ var saveAs = _global.saveAs || (
   : function saveAs (blob, name, opts, popup) {
     // Open a popup immediately do go around popup blocker
     // Mostly only available on user interaction and the fileReader is async so...
-    popup = popup || open('', '_blank')
+    popup = popup || window.open('', '_blank')
     if (popup) {
       popup.document.title =
       popup.document.body.innerText = 'downloading...'
@@ -150,7 +150,7 @@ var saveAs = _global.saveAs || (
         var url = reader.result
         url = isChromeIOS ? url : url.replace(/^data:[^;]*;/, 'data:attachment/file;')
         if (popup) popup.location.href = url
-        else location = url
+        else window.location = url
         popup = null // reverse-tabnabbing #460
       }
       reader.readAsDataURL(blob)
@@ -158,7 +158,7 @@ var saveAs = _global.saveAs || (
       var URL = _global.URL || _global.webkitURL
       var url = URL.createObjectURL(blob)
       if (popup) popup.location = url
-      else location.href = url
+      else window.location.href = url
       popup = null // reverse-tabnabbing #460
       setTimeout(function () { URL.revokeObjectURL(url) }, 4E4) // 40s
     }

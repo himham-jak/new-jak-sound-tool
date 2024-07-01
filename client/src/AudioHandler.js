@@ -857,6 +857,8 @@ export function decode_sbv2(infile_array) {
 
 export function playTrack(sbv2, trackIndex, audio_context) {
 
+  audio_context = audio_context || new AudioContext({sampleRate: 48000});
+
   if(stop_playing) { stop_playing(); stop_playing = null; }
   
   let player = new MidiPlayer(sbv2, sbv2.tracks[trackIndex], audio_context);
@@ -890,3 +892,26 @@ export function playTrack(sbv2, trackIndex, audio_context) {
     //for(let vis of channel_labels) {vis.style.backgroundColor = "transparent";}
   };
 };
+
+export function decode_vagp(infile_array, notJakOne) {
+
+  let vag_file = {
+    name:"Jak 1 VAGWAD"
+  }
+
+  if(notJakOne) {vag_file.name="Jak 2+ VAGWAD";}
+
+  return(vag_file);
+}
+
+
+export function decode_sblk(infile_array, isJakOne) {
+
+  let sbk_file = {
+    name:"Jak 2+ SBK"
+  }
+
+  if(isJakOne) {sbk_file.name="Jak 1 SBK";}
+
+  return(sbk_file);
+}

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { impulse_response_url } from './Constants'
 import { useDispatch } from 'react-redux'
 import { addFile } from './fileSlice.js'
-import { decode_sbv2 } from './AudioHandler'
+import { decode_sbv2, decode_vagp , decode_sblk } from './AudioHandler'
 
 {/*spoofing data*/}
 const testfile = {
@@ -71,18 +71,21 @@ export async function load_gamefile(infile) {
 
   // if we find them, decode the file and return
   if (vagp_flag || pgav_flag) {
-    console.log("vagp decode")
 
     // decode object with all metadata structured
-    //let vagp = decode_vagp(infile_array)
+    console.log("vagp decode")
+    let vagp = decode_vagp(infile_array,pgav_flag) // second flag for little endianess
 
     //endianness = pgav_flag
 
     // add the generic details
 
     // add the struct to the filelist after return
-    return(testfile);
+    return(vagp);
   }
+
+  // is this a jak 1 sbk?
+  let isJakOne = false;
   
 
   // check 0x18 for four bytes "SBlk"
@@ -110,23 +113,23 @@ export async function load_gamefile(infile) {
     // and check again
     let sblk_slice = infile_array.slice(indx, indx+4);
     let sblk_string = decoder.decode(sblk_slice);
-    sblk_flag = (sblk_string == "SBlk")
-    console.log("sblk?:",sblk_string);
-    console.log("sblk?:",sblk_flag);
-    console.log("jak1 sblk?:",true);
+    sblk_flag = (sblk_string == "SBlk");
+    isJakOne = sblk_flag;
+    //console.log("sblk?:",sblk_string);
+    //console.log("sblk?:",sblk_flag);
+    //console.log("jak1 sblk?:",true);
   }
 
   // if we find them, decode the file and return
   if (sblk_flag) {
-    console.log("sblk decode")
-
     // decode object with all metadata structured
-    //let sblk = decode_sblk(infile_array)
+    console.log("sblk decode")
+    let sblk = decode_sblk(infile_array, isJakOne)
 
     // add the generic details
 
     // add the struct to the filelist after return
-    return(testfile);
+    return(sblk);
   }
 
   // read it out

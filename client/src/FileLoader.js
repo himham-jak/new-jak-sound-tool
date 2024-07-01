@@ -81,7 +81,7 @@ export async function load_gamefile(infile) {
     // add the generic details
 
     // add the struct to the filelist after return
-    //return();
+    return(testfile);
   }
   
 
@@ -110,9 +110,9 @@ export async function load_gamefile(infile) {
     // and check again
     let sblk_slice = infile_array.slice(indx, indx+4);
     let sblk_string = decoder.decode(sblk_slice);
-    let sblk_flag = (sblk_string == "SBlk")
-    //console.log("sblk?:",sblk_string);
-    //console.log("sblk?:",sblk_flag);
+    sblk_flag = (sblk_string == "SBlk")
+    console.log("sblk?:",sblk_string);
+    console.log("sblk?:",sblk_flag);
     console.log("jak1 sblk?:",true);
   }
 
@@ -126,7 +126,7 @@ export async function load_gamefile(infile) {
     // add the generic details
 
     // add the struct to the filelist after return
-    //return();
+    return(testfile);
   }
 
   // read it out

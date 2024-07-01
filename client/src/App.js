@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { Provider, useSelector, useDispatch } from 'react-redux'
 import { store } from './Store'
-import { addFile, removeFile, selectFile } from './fileSlice.js'
+import { addFile, removeFile, selectFile, deselectFile } from './fileSlice.js'
 import { load_gamefile } from './FileLoader'
 import { saveAs } from './FileSaver'
 import { filelist, audio_context, playTrack } from './AudioHandler'
@@ -204,7 +204,7 @@ function FileCol(props) {
 
       <button onClick={()=> dispatch(addFile(testfile))}>TEST</button>
       <button onClick={()=> dispatch(removeFile(0))}>TEST</button>
-      <button onClick={()=> dispatch(selectFile(0))}>TEST</button>
+      <button onClick={()=> dispatch(deselectFile(0))}>TEST</button>
 
       {/* file list */}
       <div className="file-list">

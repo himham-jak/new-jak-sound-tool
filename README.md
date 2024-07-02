@@ -25,7 +25,7 @@ VAGWAD files are dialogue banks of [adpcm](https://github.com/himham-jak/adpcm) 
 
 Related links
 ---
-- A similar project in Python by [jwetzell](https://github.com/jwetzell/Jak Audio Tools).
+- A similar project in Python by [jwetzell](https://github.com/jwetzell/JakAudioTools).
 - Another similar project by [Luminar Light](https://github.com/LuminarLight/JakAudioTool).
 
 - My previous [sloppy iteration](https://github.com/himham-jak/himham-jak.github.io) of this tool.

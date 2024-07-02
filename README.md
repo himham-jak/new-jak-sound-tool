@@ -30,5 +30,6 @@ Related links
 - My previous [sloppy iteration](https://github.com/himham-jak/himham-jak.github.io) of this tool.
 - The Neopets:TDF tool by [Monster860](https://github.com/monster860/ntdf-tools) in Javascript that I forked to make the previous version.
 - A python script by [Edness](https://reshax.com/files/file/50-ps2-jak-3-jak-x-combat-racing-vagwad-extract-script/) for decrypting Jak 3 and X VAGDIR.
+- A C# tool by [XyLe-GBP](https://github.com/XyLe-GBP/ATRACTool-Reloaded) for editing the PSP's at3 format used extensively in [Daxter](https://ia600306.us.archive.org/view_archive.php?archive=/20/items/0346-daxter-usa/0346%20-%20Daxter%20%28USA%29.iso).
 
 *Jak 3 and Jak X store their music somewhere other than MUS, so presently I don't know how to edit it.

@@ -27,7 +27,6 @@ Related links
 ---
 - A similar project in Python by [jwetzell](https://github.com/jwetzell/JakAudioTools).
 - Another similar project in C# by [Luminar Light](https://github.com/LuminarLight/JakAudioTool).
-
 - My previous [sloppy iteration](https://github.com/himham-jak/himham-jak.github.io) of this tool.
 - The [Neopets:TDF tool](https://github.com/monster860/ntdf-tools) I forked to make the previous version.
-
+- A [python script](https://reshax.com/files/file/50-ps2-jak-3-jak-x-combat-racing-vagwad-extract-script/) for decrypting Jak 3 and X VAGDIR.

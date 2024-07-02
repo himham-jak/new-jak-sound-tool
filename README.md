@@ -1,19 +1,19 @@
 # new-jak-sound-tool
 An audio tool build in React and Express.js for editing PS2 music and sound files in browser.
 
-This rewrite will (eventually) support all audio files from the main Jak and Daxter series.
+This rewrite will (eventually) support all* audio files from the main Jak and Daxter series.
 
 |                | MUS (SBv2)       | SBK (SBlk)       | VAGWAD (VAGp)    |
 | -------------  | ------------- |  ------------- | ------------- |
 | Jak 1   |           ✔️  |           ✔️  |           ✔️  |
 | Jak II  |           ✔️  |           ✔️  |           ✔️  |
-| Jak 3   |           N/A  |           ✔️  |           ✔️  |
-| Jak X   |           N/A  |           ✔️  |           ✔️  |
+| [Jak 3 |           N/A  |           ✔️  |           ✔️  |
+| [Jak X](https://ia903402.us.archive.org/view_archive.php?archive=/23/items/jak-x-combat-racing-usa-v-2.00/Jak%20X%20-%20Combat%20Racing%20%28USA%29%20%28v2.00%29.iso)   |           N/A  |           ✔️  |           ✔️  |
 
 MUS
 ---
 
-[MUS Files](https://jadtech.miraheze.org/wiki/MUS_Files) are [midi](https://faydoc.tripod.com/formats/mid.htm) sequenced music tracks in SBv2 format. They're used extensively in the first two Jak games, but 3 and X only contain `TWEAKVAL.MUS`. I haven't noted any differences between MUS files in the different games. MUS files consist of a standard sized header followed by a series of instruments and tracks.
+[MUS Files](https://jadtech.miraheze.org/wiki/MUS_Files) are [midi](https://faydoc.tripod.com/formats/mid.htm) sequenced music tracks in SBv2 format. They're used extensively in the first two Jak games, but 3 and X each only contain `TWEAKVAL.MUS`. I haven't noted any differences between MUS files in the different games. MUS files consist of a standard sized header followed by a series of instruments and tracks.
 
 SBK
 ---
@@ -30,3 +30,5 @@ Related links
 - My previous [sloppy iteration](https://github.com/himham-jak/himham-jak.github.io) of this tool.
 - The Neopets:TDF tool by [Monster860](https://github.com/monster860/ntdf-tools) in Javascript that I forked to make the previous version.
 - A python script by [Edness](https://reshax.com/files/file/50-ps2-jak-3-jak-x-combat-racing-vagwad-extract-script/) for decrypting Jak 3 and X VAGDIR.
+
+*Jak 3 and Jak X have no MUS, so I'm not actually sure where their music is stored. I'll look into it.

@@ -22,3 +22,9 @@ SBK files are sound effect banks of [adpcm](https://github.com/himham-jak/adpcm)
 VAGWAD
 ---
 VAGWAD files are dialogue banks of [adpcm](https://github.com/himham-jak/adpcm) recordings in VAGp format. They're used in every entry in the series, but Jak and Daxter uses big-endian in some places where the later games use little-endian. VAGWAD files are made up of two parts: a standard sized header and a series of adpcm recordings.
+
+Related links
+---
+- My previous [sloppy iteration]() of this tool.
+- The [Neopets:TDF tool]() I forked to make the previous version.
+- A similar project by [Luminar Light](https://github.com/LuminarLight/JakAudioTool).

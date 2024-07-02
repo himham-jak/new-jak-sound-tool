@@ -25,6 +25,7 @@ VAGWAD files are dialogue banks of [adpcm](https://github.com/himham-jak/adpcm) 
 
 Related links
 ---
-- My previous [sloppy iteration](https://github.com/himham-jak/himham-jak.github.io) of this tool.
-- The [Neopets:TDF tool]() I forked to make the previous version.
 - A similar project by [Luminar Light](https://github.com/LuminarLight/JakAudioTool).
+- My previous [sloppy iteration](https://github.com/himham-jak/himham-jak.github.io) of this tool.
+- The [Neopets:TDF tool](https://github.com/monster860/ntdf-tools) I forked to make the previous version.
+

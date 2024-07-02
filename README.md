@@ -7,7 +7,7 @@ This rewrite will (eventually) support all* audio files from the main Jak and Da
 | -------------  | ------------- |  ------------- | ------------- |
 | Jak 1   |           ✔️  |           ✔️  |           ✔️  |
 | Jak II  |           ✔️  |           ✔️  |           ✔️  |
-| [Jak 3 |           N/A  |           ✔️  |           ✔️  |
+| [Jak 3](https://ia903409.us.archive.org/view_archive.php?archive=/25/items/jak-3-europe-australia-en-fr-de-es-it-pt-ru/Jak%203%20%28Europe%2C%20Australia%29%20%28En%2CFr%2CDe%2CEs%2CIt%2CPt%2CRu%29.iso) |           N/A  |           ✔️  |           ✔️  |
 | [Jak X](https://ia903402.us.archive.org/view_archive.php?archive=/23/items/jak-x-combat-racing-usa-v-2.00/Jak%20X%20-%20Combat%20Racing%20%28USA%29%20%28v2.00%29.iso)   |           N/A  |           ✔️  |           ✔️  |
 
 MUS

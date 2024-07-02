@@ -893,13 +893,42 @@ export function playTrack(sbv2, trackIndex, audio_context) {
   };
 };
 
-export function decode_vagp(infile_array, notJakOne) {
+export function decode_vagp(infile_array, isJakOne) {
 
   let vag_file = {
-    name:"Jak 1 VAGWAD"
+    name:"Jak 2+ VAGWAD"
   }
 
-  if(notJakOne) {vag_file.name="Jak 2+ VAGWAD";}
+  function stringToHex(str) {
+    // Create an array from the string where each element is a character code in hexadecimal
+    let hexArray = Array.from(str, char => {
+        // Get the character code at 'char', convert it to a hexadecimal string
+        return '0x' + char.charCodeAt(0).toString(16).toUpperCase();
+    });
+    return hexArray.join(' ');
+  }
+  
+  // search the next 4 bytes for the keyword
+  function find_str(array, index, keyword) {
+
+    let str_array = stringToHex(keyword);
+
+    return (
+      array[index]   == str_array[0] &&
+      array[index+1] == str_array[1] &&
+      array[index+2] == str_array[2] &&
+      array[index+3] == str_array[3]
+    );
+  }
+
+  // open dataview buffer from file
+  let dv = new DataView(infile_array.buffer);
+
+  let keyword = "pGAV";
+
+  if(isJakOne) {
+    keyword = "VAGp";
+  }
 
   return(vag_file);
 }

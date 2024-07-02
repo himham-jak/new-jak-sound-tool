@@ -74,7 +74,7 @@ export async function load_gamefile(infile) {
 
     // decode object with all metadata structured
     console.log("vagp decode")
-    let vagp = decode_vagp(infile_array,pgav_flag) // second flag for little endianess
+    let vagp = decode_vagp(infile_array,!pgav_flag) // second flag for little endianess
 
     //endianness = pgav_flag
 

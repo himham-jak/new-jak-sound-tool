@@ -1,4 +1,4 @@
-# new-jak-sound-tool
+8# new-jak-sound-tool
 An audio tool build in React and Express.js for editing PS2 music and sound files in browser.
 
 This rewrite will (eventually) support all audio files from the main Jak and Daxter series.
@@ -28,5 +28,5 @@ Related links
 - A similar project in Python by [jwetzell](https://github.com/jwetzell/JakAudioTools).
 - Another similar project in C# by [Luminar Light](https://github.com/LuminarLight/JakAudioTool).
 - My previous [sloppy iteration](https://github.com/himham-jak/himham-jak.github.io) of this tool.
-- The Neopets:TDF tool by [Monster860](https://github.com/monster860/ntdf-tools) I forked to make the previous version.
+- The Neopets:TDF tool by [Monster860](https://github.com/monster860/ntdf-tools) in Javascript that I forked to make the previous version.
 - A python script by [Edness](https://reshax.com/files/file/50-ps2-jak-3-jak-x-combat-racing-vagwad-extract-script/) for decrypting Jak 3 and X VAGDIR.

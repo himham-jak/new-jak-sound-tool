@@ -21,7 +21,7 @@ SBK
 
 VAGWAD
 ---
-[VAGWAD files](https://jadtech.miraheze.org/wiki/VAGWAD_Files) are dialogue banks of [adpcm](https://github.com/himham-jak/adpcm) recordings in VAGp format. They're used in every entry in the series, but Jak and Daxter uses big-endian in some places where the later games use little-endian. VAGWAD files are made up of two parts: a standard sized header and a series of adpcm recordings.
+[VAGWAD files](https://jadtech.miraheze.org/wiki/VAGWAD_Files) are dialogue banks of [adpcm](https://github.com/himham-jak/adpcm) recordings in VAGp format. They're used in every entry in the series, VAG format is even used in [The Lost Frontier](https://ia903409.us.archive.org/view_archive.php?archive=/11/items/jak-and-daxter-the-lost-frontier-pt-emersonlinogames/Jak%20and%20Daxter%20-%20The%20Lost%20Frontier%20PT%20emersonlinogames.iso), but Jak and Daxter uses big-endian in some places where the later games use little-endian. VAGWAD files are made up of two parts: a standard sized header and a series of adpcm recordings.
 
 Related links
 ---
@@ -31,4 +31,4 @@ Related links
 - The Neopets:TDF tool by [Monster860](https://github.com/monster860/ntdf-tools) in Javascript that I forked to make the previous version.
 - A python script by [Edness](https://reshax.com/files/file/50-ps2-jak-3-jak-x-combat-racing-vagwad-extract-script/) for decrypting Jak 3 and X VAGDIR.
 
-*Jak 3 and Jak X have no MUS, so I'm not actually sure where their music is stored. I'll look into it.
+*Jak 3 and Jak X store their music somewhere other than MUS, so presently I don't know how to edit it.

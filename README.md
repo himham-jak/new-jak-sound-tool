@@ -13,7 +13,7 @@ This rewrite will (eventually) support all* audio files from the main Jak and Da
 MUS
 ---
 
-[MUS Files](https://jadtech.miraheze.org/wiki/MUS_Files) are [midi](https://faydoc.tripod.com/formats/mid.htm) sequenced music tracks in [SBv2] (https://forum.xen-tax.com/viewtopic.php@t=12966.html) format. They're used extensively in the first two Jak games, but 3 and X each only contain `TWEAKVAL.MUS`. I haven't noted any differences between MUS files in the different games. MUS files consist of a standard sized header followed by a series of instruments and tracks.
+[MUS Files](https://jadtech.miraheze.org/wiki/MUS_Files) are [midi](https://faydoc.tripod.com/formats/mid.htm) sequenced music tracks in [SBv2](https://forum.xen-tax.com/viewtopic.php@t=12966.html) format. They're used extensively in the first two Jak games, but 3 and X each only contain `TWEAKVAL.MUS`. I haven't noted any differences between MUS files in the different games. MUS files consist of a standard sized header followed by a series of instruments and tracks.
 
 SBK
 ---

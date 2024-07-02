@@ -36,20 +36,20 @@ export async function load_gamefile(infile) {
   // check 0x20 for four bytes "SBv2"
   let sbv2_slice = infile_array.slice(0x20, 0x24);
   let sbv2_string = decoder.decode(sbv2_slice);
-  let sbv2_flag = (sbv2_string == "SBv2")
+  let sbv2_flag = (sbv2_string == "SBv2");
   //console.log("sbv2?:",sbv2_flag);
 
   // if we find them, decode the file and return
   if (sbv2_flag) {
 
     // decode object with all metadata structured
-    let sbv2 = decode_sbv2(infile_array)
+    let sbv2 = decode_sbv2(infile_array);
 
     // add the generic details
-    sbv2.name = filename
-    sbv2.string = fileString
-    sbv2.extension = fileExt
-    sbv2.selected = true
+    sbv2.name = filename;
+    sbv2.string = fileString;
+    sbv2.extension = fileExt;
+    sbv2.selected = true;
 
     //const dispatch = useDispatch()
 
@@ -64,8 +64,8 @@ export async function load_gamefile(infile) {
   // check 0x0 for four bytes "VAGp" or "pGAV"
   let vagp_slice = infile_array.slice(0x0, 0x4);
   let vagp_string = decoder.decode(vagp_slice);
-  let vagp_flag = (vagp_string == "VAGp")
-  let pgav_flag = (vagp_string == "pGAV")
+  let vagp_flag = (vagp_string == "VAGp");
+  let pgav_flag = (vagp_string == "pGAV");
   //console.log("vagp?:",vagp_flag);
   //console.log("pgav?:",pgav_flag);
 
@@ -79,8 +79,12 @@ export async function load_gamefile(infile) {
     //endianness = pgav_flag
 
     // add the generic details
+    vagp.name = filename;
+    vagp.string = fileString;
+    vagp.extension = fileExt;
 
     // add the struct to the filelist after return
+    console.log(vagp);
     return(vagp);
   }
 
@@ -91,13 +95,13 @@ export async function load_gamefile(infile) {
   // check 0x18 for four bytes "SBlk"
   let sblk_slice = infile_array.slice(0x18, 0x1C);
   let sblk_string = decoder.decode(sblk_slice);
-  let sblk_flag = (sblk_string == "SBlk")
+  let sblk_flag = (sblk_string == "SBlk");
   //console.log("sblk?:",sblk_flag);
 
   // if we don't find them, we might have a jak 1 sbk so
   if (!sblk_flag) {
 
-    // grab the number of sounds on the file
+    // read the number of sounds in the file from 0x14
     let num_sounds = dv.getUint32(0x14, true);
     //console.log("number of sblk1 sounds:",num_sounds);
 
@@ -127,8 +131,12 @@ export async function load_gamefile(infile) {
     let sblk = decode_sblk(infile_array, isJakOne)
 
     // add the generic details
+    sblk.name = filename;
+    sblk.string = fileString;
+    sblk.extension = fileExt;
 
     // add the struct to the filelist after return
+    console.log(sblk);
     return(sblk);
   }
 

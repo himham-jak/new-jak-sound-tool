@@ -908,10 +908,97 @@ export function decode_vagp(infile_array, notJakOne) {
 export function decode_sblk(infile_array, isJakOne) {
 
   let sbk_file = {
-    name:"Jak 2+ SBK"
+    name_list:[]
   }
 
-  if(isJakOne) {sbk_file.name="Jak 1 SBK";}
+  // open dataview buffer from file
+  let dv = new DataView(infile_array.buffer);
+
+  // for non-jak1, SBlk header starts immediately
+  let header_start = 0x0;
+
+  // if jak1 sbk then let's grab the sound names
+  if(isJakOne) {
+
+    // read the number of sounds in the file from 0x14
+    let num_sounds = dv.getUint32(0x14, true);
+    //console.log("number of sblk1 sounds:",num_sounds);
+
+    // loop over all strings
+    for (let i = 0; i < num_sounds; i++) {
+
+      // sound names start at 0x18, skip forward by 20 for each one
+      let current_idx = 0x18 + (20 * i);
+
+      // grab a slice of the bytearray
+      let name_slice = new Uint8Array(dv.buffer, current_idx, 16); // do the last 4 bytes have a use?
+
+      // filter out zero padding
+      name_slice = name_slice.filter(byte => byte !== 0);
+
+      // create a utf decoder
+      let decoder = new TextDecoder('utf-8');
+
+      // decode to string
+      let name_string = decoder.decode(name_slice);
+
+      // add to the name list
+      //console.log(name_string);
+      sbk_file.name_list.push(name_string);
+    }
+
+    // mark the end of the name header and start of the SBlk header
+    // starting at 0x18, skip forward by 20 for each one
+    header_start = 0x18+(20*num_sounds);
+
+    // then skip the padding of zeroes
+    while (infile_array[header_start] === 0) {header_start++;}
+  }
+
+  // read values from the binary array
+  let header_size = dv.getUint32(header_start + 0x08, true);
+  sbk_file.num_sounds = dv.getUint16(header_start + 0x16 + header_size, true);
+  let soundarr_ptr = dv.getUint32(header_start + 0x1c + header_size, true) + header_size;
+  let soundarr2_ptr = dv.getUint32(header_start + 0x20 + header_size, true) + header_size;
+  let soundarr3_ptr = dv.getUint32(header_start + 0x34 + header_size, true) + header_size;
+  let sound_start = dv.getUint32(header_start + 0x10, true);
+  let sound_end = dv.getUint32(header_start + 0x14, true) + sound_start;
+  let urls = [];
+
+  for(let i = 0; i < sbk_file.num_sounds; i++) {
+    try {
+      console.log("Sound ",i+1);
+      let sound_ptr = i * 12 + soundarr_ptr;
+      let num_entries = dv.getUint8(sound_ptr + 4);
+      if(num_entries == 0) {
+        console.log("No entries");
+      } else {
+        console.log("Default Volume:",dv.getUint16(sound_ptr, true));
+        console.log("Default _2:",dv.getUint16(sound_ptr+2, true));
+        console.log("Number of entries:",num_entries);
+        let sound_2_ptr = dv.getInt32(sound_ptr + 8, true) + soundarr2_ptr;
+
+        // for each entry
+        for(let j = 0; j < num_entries; j++) {
+          let entry2 = sound_2_ptr + j*8;
+          let e2_type = dv.getUint8(entry2 + 3); // Index into function table at 0x21188
+          console.log("Type:",e2_type);
+          if(e2_type == 0) {
+            let offset = dv.getUint32(entry2, true) & 0xFFFFFF;
+            console.log("Offset:",offset);
+            console.log("Other:",dv.getUint32(entry2 + 4, true));
+            let sound_3_ptr = offset + soundarr3_ptr;
+            let this_sound_start = sound_start + dv.getUint32(sound_3_ptr + 0x10, true);
+            console.log("Sound Start:",this_sound_start - sound_start)
+
+            let sound = decode_adpcm(infile_array, this_sound_start, infile_array.length, 16000);
+          }
+        }
+      }
+    } catch(e) {
+      console.log("Error:",e);
+    }
+  }
 
   return(sbk_file);
 }

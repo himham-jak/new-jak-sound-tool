@@ -77,7 +77,7 @@ Each instrument takes up 8 bytes and points to the regions where its samples are
 
 #### Instrument Samples
 
-The instrument sample regions begin immediately following the last instrument.
+The instrument sample regions begin immediately following the last instrument and are 24 bytes.
 
 | Offset  | 0x00* | 0x01 | 0x02 | 0x03 | 0x04 | 0x05 | 0x06 | 0x07 | 0x08 | 0x09 | 0x0A | 0x0B | 0x0C | 0x0D | 0x0E | 0x0F |
 | :------ | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
@@ -85,11 +85,11 @@ The instrument sample regions begin immediately following the last instrument.
 | Type    |uint8 |uint8 | int8 | int8 |    |    |  uint8  |  uint8  |    |    | uint16< |    | uint16< |    | uint16< |    |
 | Desc    |   ?  | region_volume | region_pitch_a | region_pitch_b | ? | ? | region_note_start | region_note_end | ? | ? | region_adsr1 |  | region_adsr2 |  | region_flags |  |
 
-| Offset  | 0x10 | 0x11 | 0x12 | 0x13 | 0x14 | 0x15 | 0x16 | 0x17 | 0x18 | 0x19 | 0x1A | 0x1B | 0x1C | 0x1D | 0x1E | 0x1F |
-| :------ | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
-| Value   |  SO  |  SO  |  SO  |  SO  |   ?  |   ?  |  00  |  7F  |  00  |  00  |  FF  |  80  |  D2  |  9F  |   ?  |   ?  |
-| Type    |uint32|      |      |      | uint16< |      |  uint16>  |    |    |    |  |    |  |    | uint16< |    |
-| Desc    | region_sample_offset |  |  |  | ? | ? | 127? |  | ? | ? | ? | ? | ? | ? | counter? |  |
+| Offset  | 0x10 | 0x11 | 0x12 | 0x13 | 0x14 | 0x15 | 0x16 | 0x17 |
+| :------ | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
+| Value   |  SO  |  SO  |  SO  |  SO  |   ?  |   ?  |  00  |  7F  |
+| Type    | uint32< |      |      |      | uint16< |      |  uint16>  |    |
+| Desc    | region_sample_offset |  |  |  | ? | ? | 127? |  |
 
 - *relative to `region_offset`
   

@@ -75,9 +75,9 @@ Each instrument takes up 8 bytes and points to the regions where its samples are
 
 - *usually `instruments_start` is at 0x70, but this may not be the case in modified files
 
-#### Instrument Samples
+#### Per-Instrument Information
 
-The instrument sample regions begin immediately following the last instrument and are 24 bytes.
+The per-instrument information regions begin immediately following the last instrument and are 24 bytes.
 
 | Offset  | 0x00* | 0x01 | 0x02 | 0x03 | 0x04 | 0x05 | 0x06 | 0x07 | 0x08 | 0x09 | 0x0A | 0x0B | 0x0C | 0x0D | 0x0E | 0x0F |
 | :------ | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
@@ -92,6 +92,24 @@ The instrument sample regions begin immediately following the last instrument an
 | Desc    | region_sample_offset |  |  |  | ? | ? | 127? |  |
 
 - *relative to `region_offset`
+  
+- Followed by 16 bytes of 00
+
+#### Instrument Samples
+
+- *relative to `mmid_start`
+
+#### MIDD Header
+
+24 bytes?
+
+#### MID Header
+
+148 bytes prior to each sample
+
+#### MID Samples
+
+Binary data of some kind
   
 #### Legend
 - `<`: Little endian

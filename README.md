@@ -124,7 +124,7 @@ Binary data of some kind
 
 - The first 12 bytes are reserved for the title, though the original game never uses more than 10 and the filenames only allow 8. This is followed by 8 bytes of 00.
 - Then at 0x14, there is a uint32<, the number of tracknames in the preheader, `num_sounds`. This is redundant information.
-- From 0x18 on, 12 bytes are reserved for each trackname. Each is followed by 4 bytes of 00, then 4 bytes I haven't identified but with a clear pattern to them.
+- From 0x18 on, 12 bytes are reserved for each trackname. Each is followed by 4 bytes of 00, then a 4 byte `fadeoff_params`.
 - The pre-header ends with 00 padding until some predefined round address.
 
 ### Header

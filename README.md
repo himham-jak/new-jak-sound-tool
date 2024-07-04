@@ -156,7 +156,23 @@ Binary data of some kind
 
 - ** Add `header_size` to each sound_arr_ptr for the true position
 
-### ADPCM Data
+### ADPCM Sound Arrays
+
+| Offset  | 0x50*** | 0x51 | 0x52 | 0x53 | 0x54 | 0x55 | 0x56 | 0x57 | 0x58 | 0x59 | 0x5A | 0x5B | 0x5C | 0x5D | 0x5E | 0x5F |
+| :------ | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
+| Value   |  00  |  00  |  00  |  00  |  00  |  00  |  00  |  00  |  DV  |  DV  |  D2  |  D2  |  NE  |  NE  |  NE  |  NE  |
+| Type    |  ?  |    |    |    |  ?  |    |    |    | uint16< |    | uint16< |    | Uint8 |    |    |    |
+| Desc    | ? |  |  |  | ? |  |  |  | default_volume |  | default_2 |  | num_entries |  |  |  |
+
+- *** The standard starting point for the first sample
+
+| Offset  | 0x60 | 0x61 | 0x62 | 0x63 | 0x64 | 0x65 | 0x66 | 0x67 | 0x68 | 0x69 | 0x6A | 0x6B | 0x6C | 0x6D | 0x6E | 0x6F |
+| :------ | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
+| Value   |  SP  |  SP  |  SP  |  SP  |  00  |  00  |  00  |  00  |  XX  |  XX  |  XX  |  XX  |  XX  |  XX  |  XX  |  XX  |
+| Type    | Int32< |    |    |    |    |    |    |    |  |    |  |    |  |    |    |    |
+| Desc    | sound_2_ptr* |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+
+- ** Add `soundarr2_ptr` to each sound_2_ptr for the true position
 
 ## VAGWAD
 

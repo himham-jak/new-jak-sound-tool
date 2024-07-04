@@ -225,7 +225,7 @@ For each entry in the sound array, we can do some arithmetic to find the positio
 
 ### VAGDIR.AYB
 
-VAGDIR files are...
+[VAGDIR](https://jadtech.miraheze.org/wiki/VAGDIR.AYB) files are used as directories for the adjacent VAGWAD files.
 
 ## Related links
 

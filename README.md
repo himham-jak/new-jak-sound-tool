@@ -120,7 +120,16 @@ Binary data of some kind
 
 [SBK files](https://jadtech.miraheze.org/wiki/SBK_Files) are sound effect banks of [adpcm](https://github.com/himham-jak/adpcm) recordings in SBlk format. They're used throughout the full series, but Jak and Daxter uses an older format which contains a pre-header (of seemingly indeterminate size) listing the sound names. Excluding that pre-header, SBK files are made up of two parts: a standard sized header, and a series of adpcm recordings.
 
+### Jak 1 Pre-Header
+
+- The first 12 bytes are reserved for the title, though the original game never uses more than 10 and the filenames only allow 8. This is followed by 8 bytes of 00.
+- Then at 0x14, there is a uint32<, the number of tracknames in the preheader, `num_sounds`. This is redundant information.
+- From 0x18 on, 12 bytes are reserved for each trackname. Each is followed by 4 bytes of 00, then 4 bytes I haven't identified but with a clear pattern to them.
+- The pre-header ends with 00 padding until some predefined round address.
+
 ### Header
+
+Each SBK file has one 0x50 byte header which contains version information, the addresses of sample data, the number of sounds (redundantly in the pre-header too), and 3 pointers into a sound array.
 
 | Offset  | 0x00 | 0x01 | 0x02 | 0x03 | 0x04 | 0x05 | 0x06 | 0x07 | 0x08 | 0x09 | 0x0A | 0x0B | 0x0C | 0x0D | 0x0E | 0x0F |
 | :------ | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
@@ -157,6 +166,8 @@ Binary data of some kind
 - ** Add `header_size` to each sound_arr_ptr for the true position
 
 ### ADPCM Sound Arrays
+
+For each entry in the sound array, we can do some arithmetic to find the position of the sample's data, `this_sound_start`.
 
 | Offset  | 0x50*** | 0x51 | 0x52 | 0x53 | 0x54 | 0x55 | 0x56 | 0x57 | 0x58 | 0x59 | 0x5A | 0x5B | 0x5C | 0x5D | 0x5E | 0x5F |
 | :------ | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |

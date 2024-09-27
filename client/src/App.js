@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { Provider, useSelector, useDispatch } from 'react-redux'
 import { store } from './Store'
 import { addFile, removeFile, selectFile, deselectFile } from './fileSlice.js'
@@ -104,7 +104,7 @@ function Controller(sbv2, trackIndex) {
     <div>
       <div className="controls">
         <WorkButton icon="fa fa-step-backward" func={()=>{console.log("step back");}}/>
-        <WorkButton icon="fa fa-play" func={()=>{console.log("this",sbv2);console.log("this2",sbv2.sbv2.tracks);}} />
+        <WorkButton icon="fa fa-play" func={()=>{console.log(sbv2);playTrack(sbv2.sbv2,sbv2.trackIndex);}} />
         <WorkButton icon="fa fa-step-forward" func={()=>{console.log("step forward");}}/>
         <WorkButton icon="fa fa-stop" func={()=>{console.log("stop");}} />
       </div>
@@ -232,6 +232,12 @@ function FileCol(props) {
 
 function WorkCol(props) {
   const filelist  = useSelector((state) => state.freduce.filelist)
+
+  useEffect(() => {
+    // Expose filelist to the console globally
+    window.filelist = filelist;
+  }, [filelist]); // This effect will run whenever filelist changes
+
   const dispatch = useDispatch()
   return (
     <div className="work-column">
@@ -243,7 +249,7 @@ function WorkCol(props) {
             sbv2={file}
             trackIndex={trackIndex}
             key={`${fileIndex}_${trackIndex}`} // Unique key for each Track
-            name={`${file.tag} Track ${trackIndex + 1}`} // Assuming you want to start track numbering at 1
+            name={`${file.tag} Track ${trackIndex}`} // Assuming you want to start track numbering at 0
             tempo={track.tempo} // Assuming each track has a tempo
             ticks={track.ticks} // Assuming each track has ticks
           />
@@ -263,7 +269,7 @@ function App() {
   //expose options to console
   window.playTrack = playTrack;
   window.initializeAudioContext = initializeAudioContext;
-  window.audio_context = initializeAudioContext(); //creates warning
+  //window.audio_context = initializeAudioContext(); //creates warning
   window.testprint = testprint;
 
   return (

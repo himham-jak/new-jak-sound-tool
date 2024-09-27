@@ -26,10 +26,10 @@ const testfile = {
 
 
 export class MidiPlayer {
-  constructor(sbv2, track, ctx) {
+  constructor(sbv2, track) {
     // audio setup
 
-    //let audio_context = new AudioContext({sampleRate: 48000});
+    let audio_context = initializeAudioContext();
     let convolver_buffer
     let convolver_node = audio_context.createConvolver();
     convolver_node.connect(audio_context.destination);
@@ -40,10 +40,10 @@ export class MidiPlayer {
 
     this.sbv2 = sbv2;
     this.track = track;
-    this.ctx = ctx;
-    if(ctx instanceof OfflineAudioContext) {
+    this.ctx = initializeAudioContext();
+    if(audio_context instanceof OfflineAudioContext) {
       this.convolver_node = this.ctx.createConvolver();
-      this.convolver_node.connect(ctx.destination);
+      this.convolver_node.connect(audio_context.destination);
       this.convolver_node.buffer = convolver_buffer;
       this.loops_left = 1;
     } else {

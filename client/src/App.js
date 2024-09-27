@@ -202,9 +202,9 @@ function FileCol(props) {
       {/* nav buttons */}
       <NavHeader />
 
-      <button onClick={()=> dispatch(addFile(testfile))}>TEST</button>
-      <button onClick={()=> dispatch(removeFile(0))}>TEST</button>
-      <button onClick={()=> dispatch(deselectFile(0))}>TEST</button>
+      <button onClick={()=> dispatch(addFile(testfile))}>Add Test</button>
+      <button onClick={()=> dispatch(removeFile(0))}>Remove Test</button>
+      <button onClick={()=> dispatch(deselectFile(0))}>Deselect Test</button>
 
       {/* file list */}
       <div className="file-list">

@@ -952,9 +952,7 @@ export function decode_vagp(infile_array, isJakOne) {
 
 export function decode_sblk(infile_array, isJakOne) {
 
-  let sbk_file = {
-    name_list:[]
-  }
+  let sbk_file = {}
 
   // open dataview buffer from file
   let dv = new DataView(infile_array.buffer);
@@ -964,6 +962,9 @@ export function decode_sblk(infile_array, isJakOne) {
 
   // if jak1 sbk then let's grab the sound names
   if(isJakOne) {
+
+    // create names array
+    sbk_file.names = [];
 
     // read the number of sounds in the file from 0x14
     let num_sounds = dv.getUint32(0x14, true);
@@ -989,7 +990,7 @@ export function decode_sblk(infile_array, isJakOne) {
 
       // add to the name list
       //console.log(name_string);
-      sbk_file.name_list.push(name_string);
+      sbk_file.names.push(name_string);
     }
 
     // mark the end of the name header and start of the SBlk header
@@ -1010,17 +1011,30 @@ export function decode_sblk(infile_array, isJakOne) {
   let sound_end = dv.getUint32(header_start + 0x14, true) + sound_start;
   let urls = [];
 
+  // create sounds array
+  sbk_file.sounds = [];
+
   for(let i = 0; i < sbk_file.num_sounds; i++) {
     try {
-      console.log("Sound ",i+1);
+      console.log("Sound ",i);
       let sound_ptr = i * 12 + soundarr_ptr;
       let num_entries = dv.getUint8(sound_ptr + 4);
+
+      // create the sound and add num_entries
+      let item = {
+          num_entries
+        };
+
       if(num_entries == 0) {
         console.log("No entries");
       } else {
         console.log("Default Volume:",dv.getUint16(sound_ptr, true));
         console.log("Default _2:",dv.getUint16(sound_ptr+2, true));
         console.log("Number of entries:",num_entries);
+        
+        // push the nonzero entry items to the sound array
+        sbk_file.sounds.push(item);
+        
         let sound_2_ptr = dv.getInt32(sound_ptr + 8, true) + soundarr2_ptr;
 
         // for each entry
@@ -1040,6 +1054,9 @@ export function decode_sblk(infile_array, isJakOne) {
           }
         }
       }
+      // push the zero entry items to the sound array
+      sbk_file.sounds.push(item);
+
     } catch(e) {
       console.log("Error:",e);
     }

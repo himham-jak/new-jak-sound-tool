@@ -52,13 +52,10 @@ export async function load_gamefile(infile) {
     sbv2.string = fileString;
     sbv2.extension = fileExt;
     sbv2.selected = true;
-
-    //const dispatch = useDispatch()
-
-    //dispatch(addFile(sbv2))
-    //console.log(sbv2)
+    
 
     // add the struct to the filelist after return
+    //console.log(sbv2)
     return(sbv2)
   }
   
@@ -129,8 +126,9 @@ export async function load_gamefile(infile) {
   // if we find them, decode the file and return
   if (sblk_flag) {
     // decode object with all metadata structured
-    console.log("sblk decode")
+    console.log("Begin sblk decoding:")
     let sblk = decode_sblk(infile_array, isJakOne)
+    console.log("End sblk decoding.")
 
     // add the generic details
     sblk.name = filename;

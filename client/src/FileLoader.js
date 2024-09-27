@@ -43,7 +43,9 @@ export async function load_gamefile(infile) {
   if (sbv2_flag) {
 
     // decode object with all metadata structured
+    console.log("Begin sbv2 decoding:")
     let sbv2 = decode_sbv2(infile_array);
+    console.log("End sbv2 decoding.")
 
     // add the generic details
     sbv2.name = filename;

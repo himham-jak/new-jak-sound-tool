@@ -3,7 +3,18 @@ import { useState } from 'react'
 
 let stop_playing = null;
 
-export let audio_context = new AudioContext({sampleRate: 48000}); // the PS2 SPU runs at 48 kHz
+let audio_context = null; // start out null then populate onclick to add file
+
+
+export const initializeAudioContext = () => {
+  if (!audio_context) {
+    // Create the AudioContext lazily only when this function is called
+    audio_context = new AudioContext({ sampleRate: 48000 });
+    console.log("Audio Context created.");
+  }
+  console.log("Audio Context: ", audio_context);
+  return audio_context;
+};
 
 
 {/*spoofing data*/}
@@ -17,7 +28,8 @@ const testfile = {
 export class MidiPlayer {
   constructor(sbv2, track, ctx) {
     // audio setup
-    //audio_context predefined at top level
+
+    //let audio_context = new AudioContext({sampleRate: 48000});
     let convolver_buffer
     let convolver_node = audio_context.createConvolver();
     convolver_node.connect(audio_context.destination);
@@ -851,6 +863,7 @@ export function decode_sbv2(infile_array) {
 
   let dv = new DataView(infile_array.buffer);
   let sbv2 = new SBv2Decoder(infile_array)
+  console.log("Processed sbv2 file: ", sbv2)
   return(sbv2)
 }
 

@@ -4,7 +4,7 @@ import { store } from './Store'
 import { addFile, removeFile, selectFile, deselectFile } from './fileSlice.js'
 import { load_gamefile } from './FileLoader'
 import { saveAs } from './FileSaver'
-import { filelist, audio_context, playTrack } from './AudioHandler'
+import { filelist, audio_context, playTrack, initializeAudioContext } from './AudioHandler'
 import './App.css'
 
 
@@ -20,8 +20,16 @@ function NavHeader() {
 
     // Call load_gamefile for each file selected
     for (let i=0; i < files.length; i++) {
-      let file_loaded = load_gamefile(files[i]).then((file) => dispatch(addFile(file)))
-      console.log("File Loaded: ", file_loaded)
+      console.log("Loading ", files.length, " file(s)...")
+      load_gamefile(files[i]) //async
+        .then((file) => {
+          initializeAudioContext();
+          console.log("File Handed Off: ", file);
+          dispatch(addFile(file));
+        })
+        .catch((error) => {
+          console.error("Error loading file: ", error);
+        })
     }
   }
 
@@ -209,9 +217,11 @@ function FileCol(props) {
       {/* file list */}
       <div className="file-list">
         {/* nav tab per file*/}
-        {filelist.map((file) => {
+        {filelist.map((file, index) => {
           return(
-            <NavTab name={file.name}/>
+            // requires unique key or warning from
+            // react-jsx-dev-runtime.development.js:87
+            <NavTab key={index} name={file.name}/>
             )
         })}
       </div>
@@ -243,8 +253,19 @@ function WorkCol(props) {
   )
 }
 
+function testprint() {
+  console.log("afdsdfaf")
+}
+
 
 function App() {
+
+  //expose options to console
+  window.playTrack = playTrack;
+  window.initializeAudioContext = initializeAudioContext;
+  window.audio_context = initializeAudioContext(); //creates warning
+  window.testprint = testprint;
+
   return (
     <Provider store={store}>
       <div className="box">

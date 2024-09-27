@@ -1028,9 +1028,8 @@ export function decode_sblk(infile_array, isJakOne) {
       if(num_entries == 0) {
         console.log("No entries");
       } else {
-        console.log("Default Volume:",dv.getUint16(sound_ptr, true));
-        console.log("Default _2:",dv.getUint16(sound_ptr+2, true));
-        console.log("Number of entries:",num_entries);
+        item.def_vol1 = dv.getUint16(sound_ptr, true);
+        item.def_vol2 = dv.getUint16(sound_ptr+2, true);
         
         // push the nonzero entry items to the sound array
         sbk_file.sounds.push(item);

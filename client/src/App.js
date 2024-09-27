@@ -104,9 +104,9 @@ function Controller(sbv2, trackIndex) {
     <div>
       <div className="controls">
         <WorkButton icon="fa fa-step-backward" func={()=>{console.log("step back");}}/>
-        <WorkButton icon="fa fa-play" func={()=>{console.log(sbv2);playTrack(sbv2.sbv2,sbv2.trackIndex);}} />
+        <WorkButton icon="fa fa-play" func={()=>{playTrack(sbv2.sbv2,sbv2.trackIndex);}} />
         <WorkButton icon="fa fa-step-forward" func={()=>{console.log("step forward");}}/>
-        <WorkButton icon="fa fa-stop" func={()=>{console.log("stop");}} />
+        <WorkButton icon="fa fa-stop" func={()=>{if(window.player){console.log("Stopping player");window.player.stop();};}} />
       </div>
       <div className="controls">
         <WorkButton icon="fa fa-volume-up" func={()=>{console.log("open volume slider");}}/>

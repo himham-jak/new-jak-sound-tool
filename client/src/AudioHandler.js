@@ -12,7 +12,7 @@ export const initializeAudioContext = () => {
     audio_context = new AudioContext({ sampleRate: 48000 });
     console.log("Audio Context created.");
   }
-  console.log("Audio Context: ", audio_context);
+  //console.log("Audio Context: ", audio_context);
   return audio_context;
 };
 
@@ -878,7 +878,9 @@ export function playTrack(sbv2, trackIndex, audio_context) {
   //player.channel_mask = calc_channel_mask();
   //player.reverb_enabled = reverb_toggle.checked;
   player.play();
-  console.log("Player: ", player);
+  console.log("Playing track", trackIndex, "from", sbv2.string);
+  //console.log("Player: ", player);
+  window.player = player;
   
   {/*let do_vis = () => {
       if(player.curr_timeout == null) return;
@@ -901,6 +903,7 @@ export function playTrack(sbv2, trackIndex, audio_context) {
     do_vis();*/}
   
   stop_playing = () => {
+    console.log("Stopping track", trackIndex, "from", sbv2.string);
     player.stop();
     //for(let vis of channel_labels) {vis.style.backgroundColor = "transparent";}
   };

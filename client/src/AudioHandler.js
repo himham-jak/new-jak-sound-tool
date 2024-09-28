@@ -868,25 +868,54 @@ export function decode_sbv2(infile_array) {
 }
 
 
-export function playTrack(sbv2, trackIndex) {
+export function playTrack(file, trackIndex) {
 
   audio_context = initializeAudioContext();
 
   if(stop_playing) { stop_playing(); stop_playing = null; }
+
+  switch(file.format) {
+
+    case "sbv2":
+      let player = new MidiPlayer(file, file.tracks[trackIndex], audio_context);
+      //player.channel_mask = calc_channel_mask();
+      //player.reverb_enabled = reverb_toggle.checked;
+      player.play();
+      console.log("Playing track", trackIndex, "from", file.string);
+      //console.log("Player: ", player);
+      window.player = player;
+      
+      stop_playing = () => {
+        console.log("Stopping track", trackIndex, "from", file.string);
+        player.stop();
+        //for(let vis of channel_labels) {vis.style.backgroundColor = "transparent";}
+      };
+
+      break;
+
+    case "vagp":
+      // setup
+      let source = audio_context.createBufferSource();
+      source.buffer = file.tracks[trackIndex].sound.buffer;
+      source.connect(audio_context.destination);
+
+      // play
+      console.log("Playing track", trackIndex, "from", file.string);
+      source.start();
+      
+      stop_playing = () => {
+        console.log("Stopping track", trackIndex, "from", file.string);
+        source.stop();
+        }
+
+      break;
+
+    case "sblk":
+      console.log(file.format);
+      break;
+  }
   
-  let player = new MidiPlayer(sbv2, sbv2.tracks[trackIndex], audio_context);
-  //player.channel_mask = calc_channel_mask();
-  //player.reverb_enabled = reverb_toggle.checked;
-  player.play();
-  console.log("Playing track", trackIndex, "from", sbv2.string);
-  //console.log("Player: ", player);
-  window.player = player;
   
-  stop_playing = () => {
-    console.log("Stopping track", trackIndex, "from", sbv2.string);
-    player.stop();
-    //for(let vis of channel_labels) {vis.style.backgroundColor = "transparent";}
-  };
 };
 
 export function decode_vagp(infile_array, isJakOne) {
@@ -1080,7 +1109,7 @@ export function decode_sblk(infile_array, isJakOne) {
             let this_sound_start = sound_start + dv.getUint32(sound_3_ptr + 0x10, true);
             console.log("Sound Start:",this_sound_start - sound_start)
 
-            let sound = decode_adpcm(infile_array, this_sound_start, infile_array.length, 16000);
+            track.sound = decode_adpcm(infile_array, this_sound_start, infile_array.length, 16000);
           }
         }
       }

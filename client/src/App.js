@@ -178,6 +178,7 @@ function ChannelController() {
 
 function Track(props) {
   return (
+
     <div className="row">
 
       {/* info bar */}

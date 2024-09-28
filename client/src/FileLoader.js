@@ -51,6 +51,7 @@ export async function load_gamefile(infile) {
     sbv2.name = filename;
     sbv2.string = fileString;
     sbv2.extension = fileExt;
+    sbv2.format = "sbv2";
     sbv2.selected = true;
 
 
@@ -82,6 +83,7 @@ export async function load_gamefile(infile) {
     vagp.name = filename;
     vagp.string = fileString;
     vagp.extension = fileExt;
+    vagp.format = "vagp";
     vagp.selected = true;
 
     // add the struct to the filelist after return
@@ -136,6 +138,7 @@ export async function load_gamefile(infile) {
     sblk.name = filename;
     sblk.string = fileString;
     sblk.extension = fileExt;
+    sblk.format = "sblk";
     sblk.selected = true;
 
     // add the struct to the filelist after return

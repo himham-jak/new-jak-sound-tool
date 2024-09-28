@@ -1043,7 +1043,7 @@ export function decode_sblk(infile_array, isJakOne) {
   let urls = [];
 
   // create sounds array
-  sbk_file.sounds = [];
+  sbk_file.tracks = [];
 
   for(let i = 0; i < sbk_file.num_sounds; i++) {
     try {
@@ -1052,18 +1052,18 @@ export function decode_sblk(infile_array, isJakOne) {
       let num_entries = dv.getUint8(sound_ptr + 4);
 
       // create the sound and add num_entries
-      let item = {
+      let track = {
           num_entries
         };
 
       if(num_entries == 0) {
         console.log("No entries");
       } else {
-        item.def_vol1 = dv.getUint16(sound_ptr, true);
-        item.def_vol2 = dv.getUint16(sound_ptr+2, true);
+        track.def_vol1 = dv.getUint16(sound_ptr, true);
+        track.def_vol2 = dv.getUint16(sound_ptr+2, true);
         
         // push the nonzero entry items to the sound array
-        sbk_file.sounds.push(item);
+        sbk_file.tracks.push(track);
         
         let sound_2_ptr = dv.getInt32(sound_ptr + 8, true) + soundarr2_ptr;
 
@@ -1085,7 +1085,7 @@ export function decode_sblk(infile_array, isJakOne) {
         }
       }
       // push the zero entry items to the sound array
-      sbk_file.sounds.push(item);
+      sbk_file.tracks.push(track);
 
     } catch(e) {
       console.log("Error:",e);

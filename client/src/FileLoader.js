@@ -136,6 +136,7 @@ export async function load_gamefile(infile) {
     sblk.name = filename;
     sblk.string = fileString;
     sblk.extension = fileExt;
+    sblk.selected = true;
 
     // add the struct to the filelist after return
     console.log(sblk);

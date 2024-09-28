@@ -269,7 +269,7 @@ function App() {
   //expose options to console
   window.playTrack = playTrack;
   window.initializeAudioContext = initializeAudioContext;
-  //window.audio_context = initializeAudioContext(); //creates warning
+  window.audio_context = initializeAudioContext(); //creates warning
   window.testprint = testprint;
 
   return (

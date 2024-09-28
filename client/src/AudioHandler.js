@@ -868,9 +868,9 @@ export function decode_sbv2(infile_array) {
 }
 
 
-export function playTrack(sbv2, trackIndex, audio_context) {
+export function playTrack(sbv2, trackIndex) {
 
-  audio_context = audio_context || new AudioContext({sampleRate: 48000});
+  audio_context = initializeAudioContext();
 
   if(stop_playing) { stop_playing(); stop_playing = null; }
   
@@ -882,26 +882,6 @@ export function playTrack(sbv2, trackIndex, audio_context) {
   //console.log("Player: ", player);
   window.player = player;
   
-  {/*let do_vis = () => {
-      if(player.curr_timeout == null) return;
-      for(let i = 0; i < 16; i++) {
-        let channel = player.channels[i];
-        let is_playing = false;
-        for(let note of channel) {
-          if(note) {
-            is_playing = true;
-            break;
-          }
-        }
-        let vis = channel_labels[i];
-        vis.style.backgroundColor = is_playing ? "#ccaacc" : "transparent";
-      }
-      player.channel_mask = calc_channel_mask();
-      player.reverb_enabled = reverb_toggle.checked;
-      setTimeout(do_vis, 50);
-    };
-    do_vis();*/}
-  
   stop_playing = () => {
     console.log("Stopping track", trackIndex, "from", sbv2.string);
     player.stop();
@@ -911,8 +891,9 @@ export function playTrack(sbv2, trackIndex, audio_context) {
 
 export function decode_vagp(infile_array, isJakOne) {
 
-  let vag_file = {
-    name:"Jak 2+ VAGWAD"
+  let vagp_file = {
+    name:"Jak 2+ VAGWAD",
+    tracks: []
   }
 
   function stringToHex(str) {
@@ -929,11 +910,23 @@ export function decode_vagp(infile_array, isJakOne) {
 
     let str_array = stringToHex(keyword);
 
+    console.log(array[index], str_array[0])
+
     return (
       array[index]   == str_array[0] &&
       array[index+1] == str_array[1] &&
       array[index+2] == str_array[2] &&
       array[index+3] == str_array[3]
+    );
+  }
+
+  // old version
+  function findVAGp(array, index) {
+    return (
+      array[index]   == 0x56 &&
+      array[index+1] == 0x41 &&
+      array[index+2] == 0x47 &&
+      array[index+3] == 0x70
     );
   }
 
@@ -946,7 +939,44 @@ export function decode_vagp(infile_array, isJakOne) {
     keyword = "VAGp";
   }
 
-  return(vag_file);
+  let tracks = [];
+
+  for(let idx = 0; idx < infile_array.length; idx++) {
+    if (!findVAGp(infile_array, idx, keyword)) {
+      continue
+    }
+
+    // new pointers/values based on https://wiki.xentax.com/index.php/VAG_Audio
+    let start_point   = idx;                      // idx of "VAGp"
+    let version     = dv.getUint32(start_point + 4, false);     // version (should be 2)
+    let sound_offset  = dv.getUint32(start_point + 8, false);     // additional offset for sound_start? (should be 0)
+    let sound_length  = dv.getUint32(start_point + 12, false);    // length in bytes
+    let sample_rate   = dv.getUint32(start_point + 16, false);    // sample rate in hz
+    let track_name    = new Array();                  // the name of the track (this is jank)
+      for(let i=0; i<16; i++) {
+        track_name.push(dv.getUint8(start_point + 32 + i, false)+0);
+      }
+      track_name    = new Uint8Array(track_name);
+      track_name    = new TextDecoder("utf-8").decode(track_name);
+    let sound_start   = start_point + 48;               // sound data start
+    let sound_end   = sound_start + sound_length;         // sound data end
+    let sound = decode_adpcm(infile_array, sound_start, sound_end, sample_rate);
+
+    let track = {
+        start_point,
+        version,
+        sound_offset,
+        sound_length,
+        sample_rate,
+        track_name,
+        sound_start,
+        sound_end,
+        sound
+      };
+      vagp_file.tracks.push(track);
+  }
+
+  return(vagp_file);
 }
 
 

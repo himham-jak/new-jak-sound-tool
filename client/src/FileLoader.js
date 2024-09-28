@@ -52,7 +52,7 @@ export async function load_gamefile(infile) {
     sbv2.string = fileString;
     sbv2.extension = fileExt;
     sbv2.selected = true;
-    
+
 
     // add the struct to the filelist after return
     //console.log(sbv2)
@@ -72,8 +72,9 @@ export async function load_gamefile(infile) {
   if (vagp_flag || pgav_flag) {
 
     // decode object with all metadata structured
-    console.log("vagp decode")
+    console.log("Begin vagp decoding:")
     let vagp = decode_vagp(infile_array,!pgav_flag) // second flag for little endianess
+    console.log("End vagp decoding.")
 
     //endianness = pgav_flag
 

@@ -891,11 +891,6 @@ export function playTrack(sbv2, trackIndex) {
 
 export function decode_vagp(infile_array, isJakOne) {
 
-  let vagp_file = {
-    name:"Jak 2+ VAGWAD",
-    tracks: []
-  }
-
   function stringToHex(str) {
     // Create an array from the string where each element is a character code in hexadecimal
     let hexArray = Array.from(str, char => {
@@ -939,7 +934,11 @@ export function decode_vagp(infile_array, isJakOne) {
     keyword = "VAGp";
   }
 
-  let tracks = [];
+  let vagp_file = {
+    name:"Jak 2+ VAGWAD",
+    tracks: [],
+    tag: keyword,
+  }
 
   for(let idx = 0; idx < infile_array.length; idx++) {
     if (!findVAGp(infile_array, idx, keyword)) {
@@ -963,6 +962,8 @@ export function decode_vagp(infile_array, isJakOne) {
     let sound = decode_adpcm(infile_array, sound_start, sound_end, sample_rate);
 
     let track = {
+        tempo: 0,
+        ticks: 0,
         start_point,
         version,
         sound_offset,

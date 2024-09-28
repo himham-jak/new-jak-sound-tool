@@ -82,6 +82,7 @@ export async function load_gamefile(infile) {
     vagp.name = filename;
     vagp.string = fileString;
     vagp.extension = fileExt;
+    vagp.selected = true;
 
     // add the struct to the filelist after return
     console.log(vagp);
